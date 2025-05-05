@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   dashboard-api:
     build:
@@ -13,6 +14,7 @@ services:
       - redis
     networks:
       - web
+    restart: unless-stopped
 
   dashboard-frontend:
     build:
@@ -23,6 +25,7 @@ services:
       - node_modules_dashboard:/app/node_modules
     networks:
       - web
+    restart: unless-stopped
 
   designer-api:
     build:
@@ -32,6 +35,7 @@ services:
       - ../json-maker/api:/usr/src/designer
     networks:
       - web
+    restart: unless-stopped
 
   designer-frontend:
     build:
@@ -39,6 +43,7 @@ services:
       dockerfile: Dockerfile
     networks:
       - web
+    restart: unless-stopped
 
   postgres:
     image: postgres:14
@@ -48,6 +53,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - web
+    restart: unless-stopped
 
   redis:
     image: redis:7
@@ -55,6 +61,7 @@ services:
       - "6379:6379"
     networks:
       - web
+    restart: unless-stopped
 
   caddy:
     image: caddy:2
@@ -66,6 +73,7 @@ services:
       - caddy_config:/config
     networks:
       - web
+    restart: unless-stopped
 
 volumes:
   postgres_data:
@@ -75,4 +83,4 @@ volumes:
 
 networks:
   web:
-    driver: bridge
+    driver: bridgean

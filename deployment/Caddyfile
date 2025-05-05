@@ -1,20 +1,20 @@
 {
-    # Turn off all automatic HTTPS
+    # Disable automatic HTTPS (not available on VPN/IP-only)
     auto_https off
 }
 
-# Dashboard on HTTP only
+# Dashboard routes
 http://{env.DASH_HOST} {
     @api path /api/*
     reverse_proxy @api dashboard-api:8000
-    reverse_proxy /*    dashboard-frontend:3000
+    reverse_proxy /* dashboard-frontend:3000
     encode gzip
 }
 
-# Designer on HTTP only
+# Designer routes
 http://{env.DES_HOST} {
     @api path /api/*
     reverse_proxy @api designer-api:8000
-    reverse_proxy /*    designer-frontend:3000
+    reverse_proxy /* designer-frontend:3000
     encode gzip
 }
