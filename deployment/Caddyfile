@@ -1,0 +1,20 @@
+{
+    # Turn off all automatic HTTPS
+    auto_https off
+}
+
+# Dashboard on HTTP only
+http://{env.DASH_HOST} {
+    @api path /api/*
+    reverse_proxy @api dashboard-api:8000
+    reverse_proxy /*    dashboard-frontend:3000
+    encode gzip
+}
+
+# Designer on HTTP only
+http://{env.DES_HOST} {
+    @api path /api/*
+    reverse_proxy @api designer-api:8000
+    reverse_proxy /*    designer-frontend:3000
+    encode gzip
+}

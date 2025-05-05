@@ -1,0 +1,4 @@
+services:
+  caddy:
+    env_file:
+      - ./.env.vm

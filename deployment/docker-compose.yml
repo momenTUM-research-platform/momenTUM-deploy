@@ -1,0 +1,78 @@
+version: '3.8'
+services:
+  dashboard-api:
+    build:
+      context: ../dashboard/backend
+      dockerfile: Dockerfile.dev
+    env_file:
+      - ../dashboard/backend/.env
+    volumes:
+      - ../dashboard/backend:/app
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - web
+
+  dashboard-frontend:
+    build:
+      context: ../dashboard/frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../dashboard/frontend:/app
+      - node_modules_dashboard:/app/node_modules
+    networks:
+      - web
+
+  designer-api:
+    build:
+      context: ../json-maker/api
+      dockerfile: Dockerfile
+    volumes:
+      - ../json-maker/api:/usr/src/designer
+    networks:
+      - web
+
+  designer-frontend:
+    build:
+      context: ../json-maker/frontend
+      dockerfile: Dockerfile
+    networks:
+      - web
+
+  postgres:
+    image: postgres:14
+    env_file:
+      - ../dashboard/backend/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - web
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - web
+
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - web
+
+volumes:
+  postgres_data:
+  node_modules_dashboard:
+  caddy_data:
+  caddy_config:
+
+networks:
+  web:
+    driver: bridge
