@@ -2,7 +2,7 @@
 	path = dashboard
 	url = git@github.com:momenTUM-research-platform/momenTUM-dashboard.git
 	branch = main
-[submodule "json-maker"]
-	path = json-maker
-	url = git@github.com:momenTUM-research-platform/momenTUM-json-maker.git
-	branch = dev
+[submodule "designer"]
+	path = designer
+	url = git@github.com:momenTUM-research-platform/momenTUM-designer.git
+	branch = main
