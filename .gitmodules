@@ -3,6 +3,6 @@
 	url = git@github.com:momenTUM-research-platform/momenTUM-dashboard.git
 	branch = main
 [submodule "designer"]
-	path = designer
-	url = git@github.com:momenTUM-research-platform/momenTUM-designer.git
-	branch = main
+  path = designer
+  url = git@github.com:momenTUM-research-platform/momenTUM-designer.git
+  branch = main
