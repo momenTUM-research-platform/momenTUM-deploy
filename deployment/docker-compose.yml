@@ -27,20 +27,27 @@ services:
       - web
     restart: unless-stopped
 
-  designer-api:
+  designer-backend:
     build:
-      context: ../json-maker/api
+      context: ../designer/backend
       dockerfile: Dockerfile
     volumes:
-      - ../json-maker/api:/usr/src/designer
+      - ../designer/backend:/app
+      - ../designer/studies:/app/studies
+    expose:
+      - "8000"
+    env_file:
+      - ../designer/backend/.env
     networks:
       - web
     restart: unless-stopped
 
   designer-frontend:
     build:
-      context: ../json-maker/frontend
+      context: ../designer/frontend
       dockerfile: Dockerfile
+    expose:
+      - "3000"
     networks:
       - web
     restart: unless-stopped
@@ -83,4 +90,4 @@ volumes:
 
 networks:
   web:
-    driver: bridgean
+    driver: bridge
