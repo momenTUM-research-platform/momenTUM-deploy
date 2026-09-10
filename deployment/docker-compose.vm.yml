@@ -1,4 +1,18 @@
 services:
+  dashboard-api:
+    build:
+      context: ../dashboard/backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../dashboard/backend:/app
+
+  dashboard-frontend:
+    build:
+      context: ../dashboard/frontend
+      dockerfile: Dockerfile.prod
+    expose:
+      - "3000"
+
   caddy:
     env_file:
       - ./.env.vm

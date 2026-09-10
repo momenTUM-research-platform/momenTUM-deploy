@@ -1,4 +1,19 @@
 services:
+  dashboard-api:
+    build:
+      context: ../dashboard/backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../dashboard/backend:/app
+
+  dashboard-frontend:
+    build:
+      context: ../dashboard/frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../dashboard/frontend:/app
+      - node_modules_dashboard:/app/node_modules
+
   caddy:
     env_file:
       - ./.env.local
