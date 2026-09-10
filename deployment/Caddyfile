@@ -1,15 +1,30 @@
 # Dashboard routes
-http://{env.DASH_HOST} {
+{$DASH_HOST} {
+    log {
+        output stdout
+        format json
+        level INFO
+    }
+
+    @bad {
+        path_regexp bad (.*\.\./.*|.*%2e%2e%2f.*|.*\$\{.*\}.*|.*base64.*|.*\/bin\/sh.*)
+    }
+    respond @bad 403
+
     @api path /api/*
     reverse_proxy @api dashboard-api:8000
-    reverse_proxy /* dashboard-frontend:3000
+
+    reverse_proxy dashboard-frontend:3000
+
     encode gzip
 }
 
 # Designer routes
-http://{env.DES_HOST} {
+{$DES_HOST} {
     @api path /api/*
     reverse_proxy @api designer-backend:8000
-    reverse_proxy /* designer-frontend:3000
+
+    reverse_proxy designer-frontend:3000
+
     encode gzip
 }
